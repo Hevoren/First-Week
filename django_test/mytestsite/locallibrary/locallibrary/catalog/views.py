@@ -17,6 +17,7 @@ from .models import Author
 from django.views.generic import TemplateView, ListView
 from django.db.models import Q
 
+
 class HomePageView(TemplateView):
     template_name = 'home.html'
 
@@ -24,30 +25,35 @@ class HomePageView(TemplateView):
 class SearchResultsView(ListView):
     model = Author
     template_name = 'search_results.html'
-    def get_queryset(self): # новый
+    context_object_name = 'authors'
+
+    def get_queryset(self):  # новый
         query = self.request.GET.get('q')
-        object_list = Author.objects.filter(
+
+        return Author.objects.filter(
             Q(last_name__icontains=query) | Q(first_name__icontains=query)
         )
-        return object_list
 
 
 class SearchResultsViewTwo(ListView):
     model = Book
     template_name = 'search_results_two.html'
-    def get_queryset(self): # новый
-        query = self.request.GET.get('q')
-        object_list_two = Book.objects.filter(
+    context_object_name = 'books'
+
+    def get_queryset(self):  # новый
+        query = self.request.GET.get('q_2')
+
+        return Book.objects.filter(
             Q(title__icontains=query)
         )
-        return object_list_two
+
 
 class BookListView(generic.ListView):
     model = Book
     paginate_by = 10
 
     def get_queryset(self):
-        return Book.objects.filter(title__icontains='war')[:5]
+        return Book.objects.all()
 
 
 class BookDetailView(generic.DetailView):

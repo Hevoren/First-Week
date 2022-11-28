@@ -18,6 +18,6 @@ urlpatterns = [
     path('author/<int:pk>/update/', views.AuthorUpdate.as_view(), name='author-update'),
     path('author/<int:pk>/delete/', views.AuthorDelete.as_view(), name='author-delete'),
     path('search/', SearchResultsView.as_view(), name='search_results'),
-    path('search/', SearchResultsViewTwo.as_view(), name='search_results_two'),
+    path('search_two/', SearchResultsViewTwo.as_view(), name='search_results_two'),
     path('', HomePageView.as_view(), name='home'),
 ]
